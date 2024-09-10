@@ -1,23 +1,61 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import AboutMe from './AboutMe';
+import Experiences from './Experiences';
+import Recommended from './Recommended';
+import Gallery from './Gallery';
 import './App.css';
 
 function App() {
+  const [activeTab, setActiveTab] = useState('AboutMe');
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'AboutMe':
+        return <AboutMe />;
+      case 'Experiences':
+        return <Experiences />;
+      case 'Recommended':
+        return <Recommended />;
+      case 'Gallery':
+        return <Gallery />;
+      default:
+        return <AboutMe />;
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <div className="content-box"> {/* Added a wrapper around tabs and content */}
+        {/* Tab buttons */}
+        <div className="tab-buttons">
+          <button
+            className={activeTab === 'AboutMe' ? 'active' : ''}
+            onClick={() => setActiveTab('AboutMe')}
+          >
+            About Me
+          </button>
+          <button
+            className={activeTab === 'Experiences' ? 'active' : ''}
+            onClick={() => setActiveTab('Experiences')}
+          >
+            Experiences
+          </button>
+          <button
+            className={activeTab === 'Recommended' ? 'active' : ''}
+            onClick={() => setActiveTab('Recommended')}
+          >
+            Recommended
+          </button>
+        </div>
+
+        {/* Render the selected tab's content */}
+        <div className="content">{renderContent()}</div>
+      </div>
+
+      {/* Gallery Section */}
+      <div className="gallery-box"> {/* New wrapper for gallery */}
+        <Gallery />
+      </div>
     </div>
   );
 }
